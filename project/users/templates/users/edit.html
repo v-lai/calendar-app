@@ -17,18 +17,20 @@
             {{form.username.label}}
             {{form.username(value=user.username)}}
         </div>
+        {% for field in form %} 
         <div class="field">
-            {{form.old_password.label}}
-            {{form.old_password}}
+            {% if field.name != 'csrf_token' and field.name != 'username' %}
+            {{ field.label }} {{ field }}
+            <br><span>
+            {% if field.errors %}
+                {% for error in field.errors %}
+                    {{ error }}
+                {% endfor %}
+            {% endif %}
+            </span>
+            {% endif %} 
         </div>
-        <div class="field">
-            {{form.new_password.label}}
-            {{form.new_password}}
-        </div>
-        <div class="field">
-            {{form.confirm.label}}
-            {{form.confirm}}
-        </div>
+        {% endfor %}
         <button type="submit" class="ui yellow button">Edit Account &nbsp;&nbsp;<i class="write icon"></i></button>
     </form>
     </div>

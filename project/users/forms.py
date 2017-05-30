@@ -18,10 +18,13 @@ class LoginForm(FlaskForm):
 
 class UserEditForm(FlaskForm):
   username = StringField('Username', validators=[DataRequired()])
-  old_password = PasswordField('Old Password', validators=[DataRequired()])
+  old_password = PasswordField('Old Password', [
+    validators.DataRequired(),
+    validators.Length(min=6)
+  ])
   new_password = PasswordField('New Password', [
       validators.DataRequired(),
       validators.Length(min=6),
-      validators.EqualTo('confirm', message='Passwords must match')
+      validators.EqualTo('confirm', message='New passwords must match.')
   ])
   confirm = PasswordField('Confirm New Password')

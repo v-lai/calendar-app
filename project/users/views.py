@@ -76,20 +76,18 @@ def show(id):
   if request.method == 'GET' or current_user.is_anonymous or current_user.get_id() != str(id):
     return render_template('users/show.html', user=found_user)
   if current_user.is_authenticated and request.method == b"PATCH":
-    form = UserForm(request.form)
+    form = UserEditForm(request.form)
     if form.validate():
-      if bcrypt.check_password_hash(found_user.password, form.password.data):
-        found_user.username = form.username.data
-        found_user.email = form.email.data
-        found_user.image_url = form.image_url.data or None
-        found_user.bio = form.bio.data or None
-        found_user.location = form.location.data or None
-        found_user.header_image_url = form.header_image_url.data or None
-        db.session.add(found_user)
-        db.session.commit()
-        return redirect(url_for('users.show', id=id))
-      flash({ 'text': "Wrong password, please try again.", 'status': 'danger'})
-    return render_template('users/edit.html', form=form, user=found_user)
+      found_user.username = form.data['username']
+      if bcrypt.check_password_hash(found_user.password, form.data['old_password']):
+        if form.data['new_password'] == form.data['confirm']:
+          found_user.password = bcrypt.generate_password_hash(form.data['new_password']).decode('UTF-8')
+          db.session.add(found_user)
+          db.session.commit()
+          flash('User edited!')
+        return redirect(url_for('users.show', id=found_user.id))
+      flash('User not edited! Double check passwords.')
+    return render_template('users/edit.html', user=found_user, form=form)
   if current_user.is_authenticated and request.method == b"DELETE":
     db.session.delete(found_user)
     db.session.commit()
