@@ -37,3 +37,7 @@ def load_user(id):
 @app.route('/')
 def root():
     return render_template('home.html')
+
+@app.route('/about')
+def about():
+    return render_template('about.html')
