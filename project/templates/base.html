@@ -13,12 +13,16 @@
         <a class="item" href="{{url_for('root')}}">
             Home
         </a>
-        <!--<a class="item">
-            About
-        </a>-->
-        <!--<a class="item">
+        {% if not current_user.is_authenticated %}
+        <a class="item" href="{{url_for('about')}}">
+            About &nbsp; <i class="help circle icon"></i>
+        </a>
+        {% endif %}
+        {% if current_user.is_authenticated %}
+        <a class="item"href="{{url_for('users.index')}}">
             Group &nbsp;<i class="users icon"></i>
-        </a>-->
+        </a>
+        {% endif%}
         <div class="right menu">
         {% if not current_user.is_authenticated %}
         <a class="item" href="{{url_for('users.login')}}">

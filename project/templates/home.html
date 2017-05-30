@@ -10,33 +10,56 @@
     $(document).ready(function() {
 
     // page is now ready, initialize the calendar...
+    let now = moment().format('L');
 
     $('#calendar').fullCalendar({
         // put your options and callbacks here
+        dayClick: function(date, jsEvent, view) {
+            if (date.format('L') === now){
+                alert('Clicked on: ' + date.format());
+                $(location).attr('href', {{ url_for('users.index') }});
+                $(this).css('background-color', 'red');
+                // show form
+            }
+            // change the day's background color just for fun
+            // $(this).css('background-color', 'red');
+        }
     });
+    // const cal = $('#calendar').fullCalendar('getCalendar');
+    // let m = cal.moment();
+    // console.log(m);
 
 });
 </script>
-<script>
+<!--<script>
     moment().format();
-</script>
+</script>-->
 
-<title>Calendar App Home</title>
+<title>Calendar App</title>
 {% endblock %}
 
 {% block content %}
 
 {% if current_user.is_authenticated %}
-  <h1>Your calendar</h1>
-<div class="content">
-    <div id="calendar">
+<div class="ui middle aligned centered grid">
+    <div class="twelve wide column">
+        <div class="row">
+            <h1>Your calendar</h1>
+        </div>
+        <p></p>
+        <div id="calendar">
 
+        </div>
+        <div id="moment"></div>
     </div>
-    <div id="moment"></div>
 </div>
 {% else %}
-<h1>Welcome to Calendar!</h1>
-<h3>Please login or sign up.</h3>
+<div class="ui middle aligned centered grid">
+    <div class="twelve wide column">
+        <h1>Welcome to Calendar!</h1>
+        <h3>Please login or sign up.</h3>
+    </div>
+</div>
 {% endif %}
 
 {% endblock %}

@@ -32,7 +32,7 @@ def signup():
   form = UserForm(request.form)
   if form.validate_on_submit():
     try:
-      new_user = User(form.data['username'], form.data['email'], form.data['location'], form.data['password'])
+      new_user = User(form.data['username'], form.data['email'], form.data['password'])
       db.session.add(new_user)
       db.session.commit()
     except IntegrityError as e:
@@ -50,7 +50,7 @@ def login():
     if user and bcrypt.check_password_hash(user.password, form.data['password']):
       flash("You have successfully logged in!")
       login_user(user)
-      return redirect(url_for('users.show', id=user.id))
+      return redirect(url_for('root'))
     flash("Invalid credentials.")
   return render_template('users/login.html', form=form)
 
