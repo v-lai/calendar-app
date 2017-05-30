@@ -1,6 +1,5 @@
 from flask import redirect, render_template, request, url_for, Blueprint, flash
-from project.dates.models import Date
-from project.users.models import User
+from project.models import User, Date
 from project.users.views import ensure_correct_user
 from project.dates.forms import DateForm
 from flask_login import current_user, login_required

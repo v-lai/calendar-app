@@ -27,8 +27,7 @@ login_manager.login_view = "users.login"
 
 from project.users.views import users_blueprint
 from project.dates.views import dates_blueprint
-from project.users.models import User
-from project.dates.models import Date
+from project.models import User, Date
 
 app.register_blueprint(users_blueprint, url_prefix='/users')
 app.register_blueprint(dates_blueprint, url_prefix='/users/<int:id>/dates')

@@ -1,9 +1,9 @@
 from flask import redirect, render_template, request, url_for, Blueprint, flash
-from project.dates.models import Date
-from project.users.models import User
-from project.users.views import ensure_correct_user
+from project.models import Date, User
+from project.users.forms import UserEditForm
 from project.dates.forms import DateForm
 from flask_login import current_user, login_required
+from functools import wraps
 from project import db
 from IPython import embed
 
