@@ -1,9 +1,10 @@
 from flask import redirect, render_template, request, url_for, Blueprint, flash
-from project.users.forms import UserForm, LoginForm, UserEditForm
+from project.dates.models import Date
 from project.users.models import User
-from project import db, bcrypt
-from functools import wraps
-from flask_login import login_user, logout_user, current_user, login_required
+from project.users.views import ensure_correct_user
+from project.dates.forms import DateForm
+from flask_login import current_user, login_required
+from project import db
 from IPython import embed
 
 from sqlalchemy.exc import IntegrityError
