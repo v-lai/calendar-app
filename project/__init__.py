@@ -8,11 +8,15 @@ from IPython import embed
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('SQLALCHEMY_DATABASE_URI') or 'postgres://localhost/calendar-db'
+if os.environ.get('ENV') == 'production':
+    app.config.from_object('config.ProductionConfig')
+else:
+    app.config.from_object('config.DevelopmentConfig')
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = True
 app.config['TEMPLATES_AUTO_RELOAD'] = True
-app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY') or "this is a secret key"
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 
 modus = Modus(app)
 bcrypt = Bcrypt(app)
