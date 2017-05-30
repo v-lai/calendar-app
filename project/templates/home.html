@@ -1,12 +1,39 @@
 {% extends 'base.html' %}
 {% block title %}
-Calendar App Home
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.css" />
+<!--<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.print.css" />-->
+<!--<script src="//code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>-->
+<script 
+    src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
+<script>
+    $(document).ready(function() {
+
+    // page is now ready, initialize the calendar...
+
+    $('#calendar').fullCalendar({
+        // put your options and callbacks here
+    });
+
+});
+</script>
+<script>
+    moment().format();
+</script>
+
+<title>Calendar App Home</title>
 {% endblock %}
 
 {% block content %}
 
 {% if current_user.is_authenticated %}
-  
+  <h1>Your calendar</h1>
+<div class="content">
+    <div id="calendar">
+
+    </div>
+    <div id="moment"></div>
+</div>
 {% else %}
 <h1>Welcome to Calendar!</h1>
 <h3>Please login or sign up.</h3>

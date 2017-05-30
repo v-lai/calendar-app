@@ -1,5 +1,5 @@
 from flask import redirect, render_template, request, url_for, Blueprint, flash
-from project.users.forms import UserForm, LoginForm
+from project.users.forms import UserForm, LoginForm, UserEditForm
 from project.users.models import User
 from project import db, bcrypt
 from functools import wraps
@@ -61,7 +61,16 @@ def logout():
   flash('You have been signed out.')
   return redirect(url_for('users.login'))
 
+@users_blueprint.route('/<int:id>/edit')
+@login_required
+@ensure_correct_user
+def edit(id):
+  form = UserEditForm()
+  return render_template('users/edit.html', user=User.query.get(id), form=form)
+
 @users_blueprint.route('/<int:id>', methods =["GET", "PATCH", "DELETE"])
+@login_required
+@ensure_correct_user
 def show(id):
   found_user = User.query.get(id)
   if request.method == 'GET' or current_user.is_anonymous or current_user.get_id() != str(id):

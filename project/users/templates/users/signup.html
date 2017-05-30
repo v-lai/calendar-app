@@ -1,20 +1,20 @@
 {% extends 'base.html' %}
 {% block title %}
-Calendar App Sign Up
+<title>Calendar App Sign Up</title>
 {% endblock %}
 
 {% block content %}
-    <div class="ui two column centered grid">
+    <div class="ui middle aligned centered grid">
         <div class="row">
-            <h1>User Signup</h1>
+            <h1>New User Signup</h1>
         </div>
-    <form class="ui large form" action="{{url_for('users.signup')}}" method="POST">
+    <form class="ui stacked segment large form" action="{{url_for('users.signup')}}" method="POST">
         {{ form.csrf_token }} 
         {% for field in form %} 
-        <div class="inline field">
+        <div class="field">
             {% if field.name != 'csrf_token' %}
             {{ field.label }} {{ field }}
-            <span>
+            <br><span>
             {% if field.errors %}
                 {% for error in field.errors %}
                     {{ error }}

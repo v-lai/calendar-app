@@ -1,8 +1,43 @@
 {% extends 'base.html' %}
 {% block title %}
-Calendar App
+<title>Calendar App Edit {{ current_user.username }}</title>
 {% endblock %}
 
 {% block content %}
-<h1>Show page content here</h1>
+    <div class="ui middle aligned centered grid">
+        <div class="row">
+            <h1>Edit Profile</h1>
+        </div>
+    <form class="ui stacked segment large form" action="{{url_for('users.show', id=user.id)}}?_method=PATCH" method="POST">
+        {{ form.csrf_token }}  
+        <div class="field">
+            {{ form.csrf_token }}
+        </div>
+        <div class="field">
+            {{form.username.label}}
+            {{form.username(value=user.username)}}
+        </div>
+        <div class="field">
+            {{form.old_password.label}}
+            {{form.old_password}}
+        </div>
+        <div class="field">
+            {{form.new_password.label}}
+            {{form.new_password}}
+        </div>
+        <div class="field">
+            {{form.confirm.label}}
+            {{form.confirm}}
+        </div>
+        <button type="submit" class="ui yellow button">Edit Account &nbsp;&nbsp;<i class="write icon"></i></button>
+    </form>
+    </div>
+    <div class="ui middle aligned centered grid">
+    <form class="ui segment form" method="POST" action="{{url_for('users.show', id=user.id)}}?_method=DELETE">
+        {{ form.csrf_token }}
+        <button type="submit" class="ui red button">
+            Delete Account &nbsp;&nbsp;<i class="remove user icon"></i>
+        </button>
+    </form>
+    </div>
 {% endblock %}

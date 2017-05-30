@@ -7,13 +7,11 @@ class User(db.Model, UserMixin):
   id = db.Column(db.Integer, primary_key=True)
   username = db.Column(db.Text, unique=True)
   email = db.Column(db.Text, unique=True)
-  location = db.Column(db.Text)
   password = db.Column(db.Text)
   
-  def __init__(self, username, email, location, password):
+  def __init__(self, username, email, password):
     self.username = username
     self.email = email
-    self.location = location or None
     self.password = bcrypt.generate_password_hash(password).decode('UTF-8')
 
   def __repr__(self):
