@@ -7,8 +7,8 @@
 <div class="ui middle aligned centered grid">
     <div class="twelve wide column">
         <p></p>
-        <h1>New date</h1>
-        <form class="ui stacked segment large form" method="POST" action="{{url_for('dates.index', id=current_user.id)}}">
+        <h1>Edit date: {{ date.timestamp }}</h1>
+        <form class="ui stacked segment large form" method="POST" action="{{url_for('dates.show', id=current_user.id, date_id=date.id)}}?_method=PATCH">
             {{ form.csrf_token }}
             <div>
                 <h3>Weather:</h3>
@@ -20,8 +20,13 @@
                 <p></p>
                 {% endfor %}
             </div>
-            <p></p>
-            <button type="submit" class="ui teal button">Add Today</button>
+        <p></p>
+            <button type="submit" class="ui orange button">Edit Today</button>
+        </form>
+        <p></p>
+        <form class="ui stacked segment large form" method="POST" action="{{url_for('dates.show', id=current_user.id, date_id=date.id)}}?_method=DELETE">
+        {{ form.csrf_token }}
+            <button type="submit" class="ui red button">Remove Date</button>
         </form>
     </div>
 </div>

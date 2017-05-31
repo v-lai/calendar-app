@@ -43,9 +43,9 @@ class User(db.Model, UserMixin):
     email = db.Column(db.Text, unique=True)
     password = db.Column(db.Text)
     dates = db.relationship("Date", secondary=UserDate,
-                            backref=db.backref('users'))
+                            backref=db.backref('users', lazy='dynamic'), lazy='dynamic')
     colors = db.relationship("Color", secondary=UserColor,
-                             backref=db.backref('users'))
+                             backref=db.backref('users', lazy='dynamic'), lazy='dynamic')
     age = db.Column(db.Integer)
     gender = db.Column(db.Text)
 
@@ -66,8 +66,8 @@ class Date(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     timestamp = db.Column(db.DateTime)
     weather = db.Column(db.Text)
-    all_users = db.relationship("User", viewonly=True, passive_deletes=True, secondary=UserDate, lazy="joined")
-    all_colors = db.relationship("Color", viewonly=True, passive_deletes=True, secondary=DateColor, lazy="joined")
+    all_users = db.relationship("User", viewonly=True, passive_deletes=True, secondary=UserDate, lazy="dynamic")
+    all_colors = db.relationship("Color", viewonly=True, passive_deletes=True, secondary=DateColor, lazy="dynamic")
 
     def __init__(self, weather, timestamp=datetime.utcnow()):
         self.timestamp = timestamp
@@ -83,8 +83,8 @@ class Color(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     color = db.Column(db.Text)
     mood = db.Column(db.Text)
-    all_users = db.relationship("User", viewonly=True, passive_deletes=True, secondary=UserColor, lazy="joined")
-    all_dates = db.relationship("Date", viewonly=True, passive_deletes=True, secondary=DateColor, lazy="joined")
+    all_users = db.relationship("User", viewonly=True, passive_deletes=True, secondary=UserColor, lazy="dynamic")
+    all_dates = db.relationship("Date", viewonly=True, passive_deletes=True, secondary=DateColor, lazy="dynamic")
 
     def __init__(self, color, mood):
         self.color = color

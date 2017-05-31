@@ -6,8 +6,10 @@
 {% block content %}
 <div class="ui middle aligned centered grid">
     <div class="twelve wide column">
-        <h1>Welcome to Calendar!</h1>
-        <h3>This is the date show page.</h3>
+        <h1>Selected Calendar Date & Time</h1>
+        <h3>Day & Time: {{ date.timestamp }}</h3>
+        <h3>Weather: {{ date.weather }}</h3>
+        <p><a class="ui button orange" href="{{url_for('dates.edit', id=current_user.get_id(), date_id=date.id)}}">Edit your day</a></p>
     </div>
 </div>
 
