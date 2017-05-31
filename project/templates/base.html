@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.10/semantic.min.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/semantic-ui/2.2.10/semantic.min.css">
     <script src="//code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
     <script src="//cdn.jsdelivr.net/semantic-ui/2.2.10/semantic.min.js"></script>
     {% block title %}
@@ -47,14 +47,27 @@
         {% endif %}
         </div>
     </div>
-    <div>
-    {% with messages = get_flashed_messages() %} 
-        {% if messages %} 
-            {% for message in messages %}
-                <p>{{ message }}</p>
-            {% endfor %} 
-        {% endif %} 
-    {% endwith %} 
+    <div class="ui middle aligned centered grid">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <p>
+            {% for category, message in messages %}
+                {% if category == 'positive' %}
+                    <div class="ui positive message">{{ message }}</div>
+                {% endif %}
+                {% if category == 'info' %}
+                    <div class="ui info message">{{ message }}</div>
+                {% endif %}
+                {% if category == 'warning' %}
+                    <div class="ui warning message">{{ message }}</div>
+                {% endif %}
+                {% if category == 'error' %}
+                    <div class="ui error message">{{ message }}</div>
+                {% endif %}
+            {% endfor %}
+            </p>
+        {% endif %}
+    {% endwith %}
     </div>
     <div>
     {% block content %}

@@ -17,7 +17,6 @@
         dayClick: function(date, jsEvent, view) {
             if (date.format('L') === now){
                 alert('Clicked on: ' + date.format());
-                $(location).attr('href', {{ url_for('users.index') }});
                 $(this).css('background-color', 'red');
                 // show form
             }
