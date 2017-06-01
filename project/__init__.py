@@ -27,11 +27,10 @@ login_manager.login_view = "users.login"
 
 from project.users.views import users_blueprint
 from project.dates.views import dates_blueprint
-from project.models import User, Date
+from project.models import User, Date 
 
 app.register_blueprint(users_blueprint, url_prefix='/users')
 app.register_blueprint(dates_blueprint, url_prefix='/users/<int:id>/dates')
-
 
 @login_manager.user_loader
 def load_user(id):
@@ -39,6 +38,7 @@ def load_user(id):
 
 @app.route('/')
 def root():
+    embed()
     return render_template('home.html')
 
 @app.route('/about')

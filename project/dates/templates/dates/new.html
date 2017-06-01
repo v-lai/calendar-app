@@ -1,5 +1,14 @@
 {% extends 'base.html' %}
 {% block title %}
+<link rel="stylesheet" href="../../../static/color-picker/jquery-palette-color-picker/src/palette-color-picker.css">
+<script src="../../../static/color-picker/jquery-palette-color-picker/src/palette-color-picker.min.js"></script>
+<script>
+  $(document).ready(function(){
+    $('[name="color"]').paletteColorPicker({
+      clear_btn: 'last'
+    });
+  });
+</script>
 <title>Calendar App Today</title>
 {% endblock %}
 
@@ -19,6 +28,19 @@
                 </tr>
                 <p></p>
                 {% endfor %}
+                <h3>Mood:</h3>
+                {% for subfield in form.mood %}
+                <tr>
+                    <td>{{ subfield }}</td>
+                    <td>{{ subfield.label }}</td>
+                </tr>
+                <p></p>
+                {% endfor %}
+                <h1>Pick a color: </h1>
+                <tr>
+                    <td>I'm feeling...</td>
+                    <input type="text" name="color" data-palette='["#D50000","#304FFE","#00B8D4","#00C853","#FFD600","#FF6D00","#FF1744","#3D5AFE","#00E5FF","#00E676","#FFEA00","#FF9100","#FF5252","#536DFE","#18FFFF","#69F0AE","#FFFF00","#FFAB40"]' value="" style="margin-right:48px;">
+                </tr>
             </div>
             <p></p>
             <button type="submit" class="ui teal button">Add Today</button>

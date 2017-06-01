@@ -14,6 +14,31 @@
 
         $('#calendar').fullCalendar({
             // put your options and callbacks here
+            defaultView:'month',
+            events: [
+                {
+                    // start: '2017-06-01T00:00:00',
+                    // allDay: true,
+                    // rendering: 'background',
+                    // backgroundColor: 'red',
+                    start: '2017-06-01T00:00:00',
+                    allDay: true,
+                    rendering: 'background',
+                    backgroundColor: '#00B8D4'
+                },
+                {
+                    start: '2017-05-31T00:00:00',
+                    allDay: true,
+                    rendering: 'background',
+                    backgroundColor: '#00B8D4'
+                }
+            ],
+            // events: function(start, end, callback) {
+            //     // ...
+            // },
+            // color: 'yellow',   // an option!
+
+
             dayClick: function(date, jsEvent, view) {
                 if (date.format('L') === now){
                     let url = '/users/' + {{ current_user.id }} + '/dates/new';

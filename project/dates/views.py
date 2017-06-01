@@ -1,5 +1,5 @@
 from flask import redirect, render_template, request, url_for, Blueprint, flash
-from project.models import User, Date, Color
+from project.models import User, Date
 from project.users.views import ensure_correct_user
 from project.dates.forms import DateForm
 from flask_login import current_user, login_required
@@ -21,7 +21,10 @@ def index(id):
         form = DateForm()
         if form.validate():
             new_date = Date(
-                weather=form.weather.data
+                weather=form.weather.data,
+                mood=form.mood.data,
+                color=form.color.data,
+                user_id=current_user.id
             )
             db.session.add(new_date)
             db.session.commit()
@@ -44,6 +47,8 @@ def show(id, date_id):
         form = DateForm(request.form)
         if form.validate():
             found_date.weather = form.weather.data
+            found_date.mood = form.mood.data
+            found_date.color = form.color.data
             found_date.timestamp = datetime.utcnow()
             db.session.add(found_date)
             db.session.commit()
@@ -66,6 +71,3 @@ def edit(id, date_id):
     if current_user.id == id:
         form = DateForm(obj=found_date)
         return render_template('dates/edit.html', date=found_date, form=form)
-    else:
-        flash(u"You do not have permission to edit.", 'error')
-        return redirect(url_for('root'))
