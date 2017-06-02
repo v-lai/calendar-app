@@ -1,11 +1,11 @@
-from flask import redirect, render_template, request, url_for, Blueprint, flash
+from flask import redirect, render_template, request, url_for, Blueprint, flash, jsonify
 from project.models import User, Date
 from project.users.views import ensure_correct_user
 from project.dates.forms import DateForm
 from flask_login import current_user, login_required
 from project import db
 from datetime import datetime
-# from IPython import embed
+from IPython import embed
 
 dates_blueprint = Blueprint(
     'dates',
@@ -13,24 +13,28 @@ dates_blueprint = Blueprint(
     template_folder='templates'
 )
 
-@dates_blueprint.route('/', methods=["POST"])
+@dates_blueprint.route('/', methods=["GET", "POST"])
 @login_required
 @ensure_correct_user
 def index(id):
-    if current_user.get_id() == str(id):
-        form = DateForm()
-        if form.validate():
-            new_date = Date(
-                weather=form.weather.data,
-                mood=form.mood.data,
-                color=form.color.data,
-                user_id=current_user.id
-            )
-            db.session.add(new_date)
-            db.session.commit()
-            flash(u"Date was created.", 'positive')
-        return redirect(url_for('dates.show', id=id, date_id=new_date.id))
-    return render_template('dates/new.html', form=form)
+    if request.method == "POST":
+        if current_user.get_id() == str(id):
+            form = DateForm()
+            if form.validate():
+                new_date = Date(
+                    weather=form.weather.data,
+                    mood=form.mood.data,
+                    color=form.color.data,
+                    user_id=id
+                )
+                db.session.add(new_date)
+                db.session.commit()
+                flash(u"Date was created.", 'positive')
+            return redirect(url_for('dates.show', id=id, date_id=new_date.id))
+        return render_template('dates/new.html', form=form)
+    all_dates = Date.query.filter_by(user_id=id)
+    results_data = [{"start": date.timestamp, "backgroundColor": date.color.get_hex()} for date in all_dates]
+    return jsonify(results_data)
 
 @dates_blueprint.route('/new')
 @login_required

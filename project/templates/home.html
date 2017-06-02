@@ -1,50 +1,25 @@
 {% extends 'base.html' %}
 {% block title %}
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.css" />
-<!--<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.print.css" />-->
-<!--<script src="//code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>-->
 <script 
     src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
 <script>
     $(document).ready(function() {
-
-        // page is now ready, initialize the calendar...
-        let now = moment().format('L');
-
-        $('#calendar').fullCalendar({
-            // put your options and callbacks here
+        $.getJSON("/users/{{current_user.get_id()}}/dates").then(function(data){
+            $('#calendar').fullCalendar({
             defaultView:'month',
-            events: [
-                {
-                    // start: '2017-06-01T00:00:00',
-                    // allDay: true,
-                    // rendering: 'background',
-                    // backgroundColor: 'red',
-                    start: '2017-06-01T00:00:00',
-                    allDay: true,
-                    rendering: 'background',
-                    backgroundColor: '#00B8D4'
-                },
-                {
-                    start: '2017-05-31T00:00:00',
-                    allDay: true,
-                    rendering: 'background',
-                    backgroundColor: '#00B8D4'
-                }
-            ],
-            // events: function(start, end, callback) {
-            //     // ...
-            // },
-            // color: 'yellow',   // an option!
-
-
-            dayClick: function(date, jsEvent, view) {
-                if (date.format('L') === now){
-                    let url = '/users/' + {{ current_user.id }} + '/dates/new';
-                    $(location).attr('href', url); // redirecting to new date page
+            events: data.map(function(d){
+                return Object.assign({}, d, {allDay: true, rendering: 'background'});
+            }),
+             dayClick: function(date, jsEvent, view) {
+                let now = moment().format('L');
+                if (date.format('L') === now && !date.isSame(moment(), 'day')){
+                    let url = '/users/{{ current_user.get_id() }}/dates/new';
+                    $(location).attr('href', url);
                 }
             }
+            });
         });
     });
 </script>

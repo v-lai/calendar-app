@@ -7,8 +7,11 @@
 {% block content %}
 <div class="ui middle aligned centered grid">
     <div class="twelve wide column">
-        <h1>Show page content here</h1>
-        <h3></h3>
+        <h1>{{current_user.username}}'s Calendar Journal</h1>
+        <h3>Your History of Posts</h3>
+        {% for date in dates %}
+            <p><a class="ui basic teal button" href="{{url_for('dates.show', id=current_user.id, date_id=date.id)}}">Link</a> {{date}}</p>
+        {% endfor %}
     </div>
 </div>
 

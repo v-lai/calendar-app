@@ -38,7 +38,6 @@ def load_user(id):
 
 @app.route('/')
 def root():
-    embed()
     return render_template('home.html')
 
 @app.route('/about')
