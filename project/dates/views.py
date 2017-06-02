@@ -5,7 +5,7 @@ from project.dates.forms import DateForm
 from flask_login import current_user, login_required
 from project import db
 from datetime import datetime
-from IPython import embed
+# from IPython import embed
 
 dates_blueprint = Blueprint(
     'dates',

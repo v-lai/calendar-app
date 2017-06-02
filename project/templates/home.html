@@ -14,7 +14,7 @@
             }),
              dayClick: function(date, jsEvent, view) {
                 let now = moment().format('L');
-                if (date.format('L') === now && !date.isSame(moment(), 'day')){
+                if (date.format('L') === now){
                     let url = '/users/{{ current_user.get_id() }}/dates/new';
                     $(location).attr('href', url);
                 }
@@ -23,7 +23,7 @@
         });
     });
 </script>
-
+<link rel="stylesheet" href="/static/style.css">
 <title>Calendar App</title>
 {% endblock %}
 
@@ -43,12 +43,14 @@
     </div>
 </div>
 {% else %}
+<body class="splash">
 <div class="ui middle aligned centered grid">
-    <div class="twelve wide column">
-        <h1>Welcome to Calendar!</h1>
-        <h3>Please login or sign up.</h3>
+    <div class="twelve wide column home-text text-offset">
+        <h1>Welcome to Mood Calendar!</h1>
+        <h3>Please login or sign up to get started tracking your moods.</h3>
     </div>
 </div>
+</body>
 {% endif %}
 
 {% endblock %}

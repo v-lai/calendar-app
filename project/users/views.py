@@ -25,7 +25,7 @@ def ensure_correct_user(fn):
 
 @users_blueprint.route('/')
 def index():
-    dates = Date.query.limit(25).all()
+    dates = Date.query.order_by("timestamp desc").limit(25).all()
     return render_template('users/index.html', user=User.query.first(), dates=dates)
 
 @users_blueprint.route('/signup', methods=['GET', 'POST'])
@@ -75,7 +75,7 @@ def edit(id):
 def show(id):
     found_user = User.query.get(id)
     if request.method == 'GET' or current_user.is_anonymous or current_user.get_id() != str(id):
-        return render_template('users/show.html', user=found_user, dates=Date.query.filter_by(user_id=id))
+        return render_template('users/show.html', user=found_user, dates=Date.query.filter_by(user_id=id).order_by("timestamp desc"))
     if current_user.is_authenticated and request.method == b"PATCH":
         form = UserEditForm(request.form)
         if form.validate():

@@ -2,7 +2,6 @@ from flask_wtf import FlaskForm
 from wtforms import RadioField, TextField
 from wtforms.validators import DataRequired
 from colour import Color
-# from project.models import A_Color
 
 class DateForm(FlaskForm):
     weather = RadioField('weather', choices=[('sunny', 'sunny'),

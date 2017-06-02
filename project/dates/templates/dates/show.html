@@ -7,11 +7,20 @@
 <div class="ui middle aligned centered grid">
     <div class="twelve wide column">
         <h1>Selected Calendar Date & Time</h1>
-        <div style="background-color: {{date.color}}; padding: 15px">
-        <h3>Day & Time: {{ date.timestamp }}</h3>
-        <h3>Weather: {{ date.weather }}</h3>
-        <h3>Mood: {{ date.mood }}</h3>
-        </div>
+        <table class="ui celled table">
+            <thead>
+                <tr><th>Date</th>
+                <th>Weather</th>
+                <th>Mood</th>
+            </tr></thead>
+            <tbody>
+                <tr style="color: {{date.color.hex}}">
+                    <td>{{ date.timestamp.date() }}</td>
+                    <td>{{ date.weather }}</td>
+                    <td>{{ date.mood }}</td>
+                </tr>
+            </tbody>
+        </table>
         <p></p>
         <p><a class="ui button orange" href="{{url_for('dates.edit', id=current_user.get_id(), date_id=date.id)}}">Edit your day</a></p>
     </div>

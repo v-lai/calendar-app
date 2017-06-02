@@ -6,10 +6,31 @@
 {% block content %}
 <div class="ui middle aligned centered grid">
     <div class="twelve wide column">
-        <h1>25 Latest Posts</h1>
-        {% for date in dates %}
-            <p>{{date}}</p>
-        {% endfor %}
+        <h1>Group Insights</h1>
+        <h3>25 Latest Posts From All Users</h3>
+        <table class="ui celled striped table">
+            <thead>
+                <tr><th>Date</th>
+                <th>Weather</th>
+                <th>Mood</th>
+            </tr></thead>
+            <tbody>
+                {% for date in dates %}
+                <tr style="color: {{date.color.hex}}">
+                    <td>{{ date.timestamp.date() }}</td>
+                    <td>{{ date.weather }}</td>
+                    <td>{{ date.mood }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="d3-vis">
+        <p></p>
+        <h1>We Feel Fine D3 Visualization</h1>
+        <svg width="1200" height="1200" font-family="sans-serif" font-size="10" text-anchor="middle"></svg>
+        <script src="//d3js.org/d3.v4.js"></script>
+        <script src="/static/wff.js"></script>
     </div>
 </div>
 {% endblock %}

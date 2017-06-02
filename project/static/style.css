@@ -1,0 +1,40 @@
+.splash {
+    background-image: url('/static/nicholas-gercken-82011.jpg'); 
+    background-position:center center;
+    background-repeat:no-repeat;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    z-index: -1;
+}
+
+.about {
+    background-image: url('/static/chris-lawton-6928.jpg'); 
+    background-position:center center;
+    background-repeat:no-repeat;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    z-index: -1;
+}
+
+.d3-vis {
+    display: block;
+    margin: auto;
+    text-align: center;
+}
+
+.home-text {
+    color: rgb(0, 168, 157);
+    text-shadow: 2px 2px 0px #333, 0px 0px 1em #333, 0px 0px 0.2em #333;
+}
+
+.body-text {
+    background: rgba(255,255,255,0.7);
+}
+
+.text-offset {
+    margin: 100px auto;
+}

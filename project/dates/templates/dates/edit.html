@@ -16,8 +16,8 @@
 <div class="ui middle aligned centered grid">
     <div class="twelve wide column">
         <p></p>
-        <h1>Edit date: {{ date.timestamp }}</h1>
-        <form class="ui stacked segment large form" method="POST" action="{{url_for('dates.show', id=current_user.id, date_id=date.id)}}?_method=PATCH" style="background-color: {{ form.color.data }}">
+        <h1>Edit date: {{ date.timestamp.date() }}</h1>
+        <form class="ui stacked segment large form" method="POST" action="{{url_for('dates.show', id=current_user.id, date_id=date.id)}}?_method=PATCH">
             {{ form.csrf_token }}
             <div>
                 <h3>Weather:</h3>
@@ -36,7 +36,7 @@
                 </tr>
                 <p></p>
                 {% endfor %}
-                <h3>Edit color: </h3>
+                <h3 style="color: {{ form.color.data }}">Edit color: </h3>
                 <tr>
                     <td>I'm feeling... (pick a color)</td>
                     <input type="text" name="color" data-palette='["#D50000","#304FFE","#00B8D4","#00C853","#FFD600","#FF6D00","#FF1744","#3D5AFE","#00E5FF","#00E676","#FFEA00","#FF9100","#FF5252","#536DFE","#18FFFF","#69F0AE","#FFFF00","#FFAB40"]' value="{{ form.color.data }}" style="margin-right:48px;">

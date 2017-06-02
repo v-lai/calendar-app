@@ -1,14 +1,19 @@
 {% extends 'base.html' %}
 {% block title %}
 <title>Calendar App About</title>
+<link rel="stylesheet" href="/static/style.css">
 {% endblock %}
 
 {% block content %}
+<body class="about">
 <div class="ui middle aligned centered grid">
-    <div class="twelve wide column">
-        <h1>Welcome to Calendar!</h1>
-        <h3>This is the about page.</h3>
+    <div class="twelve wide column body-text text-offset">
+        <h1>About</h1>
+        <p>A calendar that helps track your moods each day. Users can input moods and colors onto a calendar for that particular day.</p>
+        <p></p>
+        <p>Inspired by <a href="//www.wefeelfine.org/">We Feel Fine</a>, a project by Jonathan Harris & Sepandar Kamvar, based an exploration of human emotion on a global scale that harvested human feelings from weblogs.</p>
     </div>
 </div>
+</body>
 
 {% endblock %}
