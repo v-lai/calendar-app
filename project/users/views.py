@@ -1,12 +1,10 @@
 from functools import wraps
 from flask import redirect, render_template, request, url_for, Blueprint, flash
 from project.models import Date, User
-from project.users.forms import UserForm, LoginForm, UserEditForm, UserInfoForm
-from project.dates.forms import DateForm
+from project.users.forms import UserForm, LoginForm, UserEditForm
 from flask_login import login_user, logout_user, current_user, login_required
 from project import db, bcrypt
 from sqlalchemy.exc import IntegrityError
-# from IPython import embed
 
 users_blueprint = Blueprint(
     'users',
@@ -37,10 +35,11 @@ def signup():
             db.session.add(new_user)
             db.session.commit()
         except IntegrityError as e:
-            flash(u"Username already taken.", 'error')
+            flash("Username already taken.", 'error')
             return render_template('users/signup.html', form=form)
-        flash(u"User created! Welcome.", 'positive')
-        return redirect(url_for('users.show', id=new_user.id))
+        flash("User created! Welcome.", 'positive')
+        login_user(new_user)
+        return redirect(url_for('root'))
     return render_template('users/signup.html', form=form)
 
 @users_blueprint.route('/login', methods=['GET', 'POST'])
@@ -50,16 +49,16 @@ def login():
         user = User.query.filter_by(username=form.data['username']).first()
         if user and bcrypt.check_password_hash(user.password, form.data['password']):
             login_user(user)
-            flash(u"You have successfully logged in!", 'positive')
+            flash("You have successfully logged in!", 'positive')
             return redirect(url_for('root'))
-        flash(u"Invalid credentials.", 'warning')
+        flash("Invalid credentials.", 'warning')
     return render_template('users/login.html', form=form)
 
 @users_blueprint.route('/logout')
 @login_required
 def logout():
     logout_user()
-    flash(u"You have been signed out.", 'positive')
+    flash("You have been signed out.", 'positive')
     return redirect(url_for('users.login'))
 
 @users_blueprint.route('/<int:id>/edit')
@@ -85,12 +84,12 @@ def show(id):
                     found_user.password = bcrypt.generate_password_hash(form.data['new_password']).decode('UTF-8')
                     db.session.add(found_user)
                     db.session.commit()
-                    flash(u"User edited!", 'info')
+                    flash("User edited!", 'info')
                 return redirect(url_for('users.show', id=found_user.id))
-            flash(u"User not edited! Double check passwords.", 'warning')
+            flash("User not edited! Double check passwords.", 'warning')
         return render_template('users/edit.html', user=found_user, form=form)
     if current_user.is_authenticated and request.method == b"DELETE":
         db.session.delete(found_user)
         db.session.commit()
-        flash(u"User deleted.", 'info')
+        flash("User deleted.", 'info')
         return redirect(url_for('users.signup'))

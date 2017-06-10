@@ -38,3 +38,13 @@
 .text-offset {
     margin: 100px auto;
 }
+
+td.fc-today {
+    cursor: pointer;
+    font-weight: bolder;
+    color: crimson;
+}
+
+.fc-bgevent {
+    opacity: 1; 
+}

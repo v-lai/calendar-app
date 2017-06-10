@@ -10,11 +10,12 @@ Instructions on how to get running on your local machine:
 
 ### Installation and Set Up
 1. Fork and clone this repository.
-2. Create a virtual environment. `virtualenv calendar-app` (or whatever you want to call it)  
-3. Install requirements with: `pip install -r requirements.txt`
-4. Create your database and run `python manage.py db upgrade` 
-5. Start the server using `python app.py`
-6. View the page in your browser at `localhost:5000`
+2. Create a virtual environment. In terminal: `virtualenv calendar-app` (or whatever you want to call "calendar-app") Install virtualenvwrapper before  this step if you do not already have it (https://pypi.python.org/pypi/virtualenvwrapper).
+3. Install requirements with: `pip install -r requirements.txt` in terminal.
+4. Create your calendar-app database in terminal using: `createdb calendar-db` and run `python manage.py db upgrade`. Install Postgres before this step if you do not already have it (https://www.postgresql.org/download/).   
+5. Set your local environment variables for a secret key for the CSRF token protection in the forms. While in your virtualenv, run `[subl,atom,code] $VIRTUAL_ENV/bin/postactivate` in terminal, depending on your text editor preferences/setup. Example: `code $VIRTUAL_ENV/bin/postactivate` to open up the file in VSCode. Add `export SECRET_KEY='YOUR_SECRET_KEY'` to the file and save.
+6. Start the server using `python app.py` in terminal.
+7. View the page in your browser at `localhost:5000`
 
 
 ## Built With  
@@ -35,6 +36,9 @@ Instructions on how to get running on your local machine:
 * SemanticUI (https://semantic-ui.com/)
 * Color - Python color representations manipulation (https://github.com/vaab/colour)
 * JQuery Palette Color Picker (https://github.com/carloscabo/jquery-palette-color-picker)
+* Photos from Unsplash (https://unsplash.com/)
+	* Home Page Image (https://unsplash.com/photos/Cy4jIcJ7w0Y)
+	* About Page Image (https://unsplash.com/photos/P3VNWILRbzw)
 
 
 **Data Visualization:**  

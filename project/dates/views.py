@@ -1,11 +1,10 @@
+from datetime import datetime
 from flask import redirect, render_template, request, url_for, Blueprint, flash, jsonify
-from project.models import User, Date
+from project.models import Date
 from project.users.views import ensure_correct_user
 from project.dates.forms import DateForm
 from flask_login import current_user, login_required
 from project import db
-from datetime import datetime
-# from IPython import embed
 
 dates_blueprint = Blueprint(
     'dates',
@@ -33,7 +32,8 @@ def index(id):
             return redirect(url_for('dates.show', id=id, date_id=new_date.id))
         return render_template('dates/new.html', form=form)
     all_dates = Date.query.filter_by(user_id=id)
-    results_data = [{"start": date.timestamp, "backgroundColor": date.color.get_hex()} for date in all_dates]
+    results_data = [{"start": date.timestamp, "backgroundColor": date.color.get_hex()}
+                    for date in all_dates]
     return jsonify(results_data)
 
 @dates_blueprint.route('/new')
@@ -42,7 +42,7 @@ def index(id):
 def new(id):
     return render_template('dates/new.html', form=DateForm(), id=id)
 
-@dates_blueprint.route('/<int:date_id>', methods =["GET", "PATCH", "DELETE"])
+@dates_blueprint.route('/<int:date_id>', methods=["GET", "PATCH", "DELETE"])
 @login_required
 @ensure_correct_user
 def show(id, date_id):
